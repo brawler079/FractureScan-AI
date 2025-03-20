@@ -8,7 +8,6 @@ import Hero from "@/components/Hero";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-50 to-indigo-100">
-      <Header />
       <main className="flex-grow">
         <Hero />
         <Features />

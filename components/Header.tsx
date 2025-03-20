@@ -6,40 +6,40 @@ import { Menu } from "lucide-react";
 import { useClerk, useUser } from "@clerk/nextjs"; // Use client-side hooks from Clerk
 
 export default function Header() {
-  const { user } = useUser(); // Get the current user on the client side
+  const { user } = useUser(); 
   const { signOut } = useClerk(); // For signing out
 
   return (
-    <header className="bg-purple-50 shadow-sm">
+    <header className="fixed top-0 left-0 w-full bg-teal-50 shadow-lg z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="font-bold text-xl text-purple-800">
+            <Link href="/" className="font-bold text-xl text-teal-800">
               FractureScan AI
             </Link>
           </div>
           <nav className="hidden md:flex">
             <div className="flex space-x-4 items-center">
-              <Link href="#features" className="text-purple-600 hover:text-purple-800">
-                Features
+              <Link href="/dashboard" className="text-teal-600 hover:text-teal-800 hover:scale-105">
+                Dashboard
               </Link>
-              <Link href="#about" className="text-purple-600 hover:text-purple-800">
-                About
+              <Link href="/history" className="text-teal-600 hover:text-teal-700 hover:scale-105">
+                History
               </Link>
-              <Link href="#contact" className="text-purple-600 hover:text-purple-800">
+              <Link href="#contact" className="text-teal-600 hover:text-teal-800">
                 Contact
               </Link>
 
               {/* Conditional Rendering: Login/Signup or Logout */}
               {user ? (
                 <>
-                  <span className="text-purple-600">
+                  <span className="text-teal-600 underline">
                     Hello, {user.firstName || "User"}!
                   </span>
                   <Button
                     variant="outline"
                     onClick={() => signOut({ redirectUrl: '/' })}
-                    className="border-purple-600 text-purple-600 hover:bg-purple-100"
+                    className="border-teal-600 rounded text-teal-600 hover:bg-purple-100"
                   >
                     Log out
                   </Button>
@@ -49,13 +49,13 @@ export default function Header() {
                   <Button
                     variant="outline"
                     asChild
-                    className="border-purple-600 text-purple-600 hover:bg-purple-100"
+                    className="border-teal-600 rounded text-teal-600 hover:bg-purple-100"
                   >
                     <Link href="/sign-in">Log in</Link>
                   </Button>
                   <Button
                     asChild
-                    className="bg-purple-600 text-white hover:bg-purple-700"
+                    className="bg-teal-600 rounded text-white hover:bg-teal-700"
                   >
                     <Link href="/sign-up">Sign up</Link>
                   </Button>
