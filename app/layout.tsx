@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FractureScan AI | Bone Fracture Detection model",
   description: "Advanced bone fracture detection model",
+  icons: {
+    icon: "/Demo.jpg"
+  }
 };
 
 export default function RootLayout({
@@ -25,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased pt-16`}
       >

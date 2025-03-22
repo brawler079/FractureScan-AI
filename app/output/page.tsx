@@ -1,12 +1,10 @@
 'use client'
+import { usePredictionStore } from "@/lib/store";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const OutputPage = () => {
-    const searchParams = useSearchParams();
-    const detectedBones = searchParams.get("result");
-    const outputImage = searchParams.get("image");
+    const { detectedBones, outputImage } = usePredictionStore();  // ✅ Read Zustand state
     const router = useRouter();
 
     return (
@@ -22,7 +20,7 @@ const OutputPage = () => {
                         <div className="mt-4">
                             <h3 className="text-lg text-gray-600">Processed Image:</h3>
                             <Image
-                                src={`http://127.0.0.1:8000/images/${outputImage}.png`}
+                                src={outputImage}
                                 width={300}
                                 height={300}
                                 alt="Processed Image"

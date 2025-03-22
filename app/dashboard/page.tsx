@@ -3,12 +3,14 @@ import Image from "next/image";
 import axios from 'axios';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { usePredictionStore } from "@/lib/store";
 
 const Dashboard = () => {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const router = useRouter();  // ✅ Added for navigation
+    const router = useRouter();
+    const setPrediction = usePredictionStore((state) => state.setPrediction);  // ✅ Zustand function
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -19,7 +21,7 @@ const Dashboard = () => {
     const handleUpload = async () => {
         if (!file) {
             setError("Please select a file!");
-            return;  // ✅ Stop execution if no file
+            return;
         }
 
         const formData = new FormData();
@@ -35,8 +37,11 @@ const Dashboard = () => {
 
             const { detected_bones, output_image_id } = response.data;
 
-            // ✅ Redirect to /output with results in query params
-            router.push(`/output?result=${encodeURIComponent(detected_bones)}&image=${encodeURIComponent(output_image_id)}`);
+            // ✅ Store the prediction in Zustand
+            setPrediction(detected_bones, `http://127.0.0.1:8000/images/${output_image_id}.png`);
+
+            // ✅ Redirect to /output (no query params needed)
+            router.push("/output");
         } catch (err) {
             setError("Failed to process image. Please try again.");
         } finally {
@@ -45,15 +50,15 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gray-50 relative flex flex-col items-center justify-center p-10">
+        <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center p-10">
             <div className="flex items-center justify-center gap-16 w-full">
                 <Image src="/Demo.jpg" width={350} height={350} alt="Demo Image" className="rounded-3xl shadow-2xl" />
 
                 <div className="max-w-2xl">
-                    <h1 className="text-5xl text-balance mx-12 font-bold italic text-orange-800 leading-snug">
+                    <h1 className="text-5xl font-bold italic text-orange-800 leading-snug">
                         Get Your Fracture Report Instantly
                     </h1>
-                    <p className="text-lg text-gray-600 mt-4 mx-10 leading-relaxed">
+                    <p className="text-lg text-gray-600 mt-4 leading-relaxed">
                         Our AI-powered system uses machine learning algorithms to detect
                         bone fractures with high accuracy. Simply upload your X-ray images
                         and get instant results.
@@ -81,11 +86,6 @@ const Dashboard = () => {
                 {error && <p className="mt-4 text-red-500 text-sm">{error}</p>}
                 <p className="mt-4 text-sm text-gray-500 italic">Upload your X-ray to analyze.</p>
             </div>
-
-            {/* Decorative Shapes */}
-            <div className="absolute top-10 right-16 w-24 h-24 bg-pink-500 opacity-40 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-10 left-10 w-32 h-32 bg-green-500 opacity-40 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-[30%] right-[17%] w-20 h-20 bg-blue-500 opacity-30 rounded-full blur-2xl"></div>
         </div>
     );
 };
