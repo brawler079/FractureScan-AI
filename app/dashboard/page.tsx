@@ -10,7 +10,7 @@ const Dashboard = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const setPrediction = usePredictionStore((state) => state.setPrediction);  // ✅ Zustand function
+    const setPrediction = usePredictionStore((state) => state.setPrediction);
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -18,41 +18,39 @@ const Dashboard = () => {
         }
     };
 
-    const handleUpload = async () => {
-        if (!file) {
-            setError("Please select a file!");
-            return;
-        }
+   const handleUpload = async () => {
+    if (!file) {
+        setError("Please select a file!");
+        return;
+    }
 
-        const formData = new FormData();
-        formData.append("file", file);
+    const formData = new FormData();
+    formData.append("file", file);
 
-        setLoading(true);
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try {
-            const response = await axios.post("http://127.0.0.1:8000/predict", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+    try {
+        const response = await axios.post("https://13d8-2401-4900-889f-23b2-e9c3-9c09-1255-c290.ngrok-free.app/predict", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
 
-            const { detected_bones, output_image_id } = response.data;
+        console.log("✅ API Response:", response.data);
+        setPrediction(response.data.detected_bones, response.data.output_image_id);
+        router.push("/output");
+    } catch (err: any) {
+        console.error("❌ Upload Error:", err.message, err.response?.data);
+        setError("Failed to process image. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+};
 
-            // ✅ Store the prediction in Zustand
-            setPrediction(detected_bones, `http://127.0.0.1:8000/images/${output_image_id}.png`);
-
-            // ✅ Redirect to /output (no query params needed)
-            router.push("/output");
-        } catch (err) {
-            setError("Failed to process image. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center p-10">
             <div className="flex items-center justify-center gap-16 w-full">
-                <Image src="/Demo.jpg" width={350} height={350} alt="Demo Image" className="rounded-3xl shadow-2xl" />
+                <Image src="/Demo.jpg" width={350} height={350} alt="Display Image" className="rounded-3xl shadow-2xl" />
 
                 <div className="max-w-2xl">
                     <h1 className="text-5xl font-bold italic text-orange-800 leading-snug">
