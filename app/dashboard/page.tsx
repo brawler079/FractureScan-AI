@@ -18,34 +18,39 @@ const Dashboard = () => {
         }
     };
 
-   const handleUpload = async () => {
-    if (!file) {
-        setError("Please select a file!");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    setLoading(true);
-    setError(null);
-
-    try {
-        const response = await axios.post("https://13d8-2401-4900-889f-23b2-e9c3-9c09-1255-c290.ngrok-free.app/predict", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        console.log("✅ API Response:", response.data);
-        setPrediction(response.data.detected_bones, response.data.output_image_id);
-        router.push("/output");
-    } catch (err: any) {
-        console.error("❌ Upload Error:", err.message, err.response?.data);
-        setError("Failed to process image. Please try again.");
-    } finally {
-        setLoading(false);
-    }
-};
-
+    const handleUpload = async () => {
+        if (!file) {
+            setError("Please select a file!");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        setLoading(true);
+        setError(null);
+    
+        try {
+            const response = await axios.post("https://b2f3-43-239-201-155.ngrok-free.app/predict", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+    
+            const { detected_bones, output_image_id, remedies } = response.data;
+    
+            setPrediction(detected_bones, output_image_id, remedies); 
+            router.push("/output");
+        } catch (err) {
+            if (axios.isAxiosError(err) && err.response) {
+                console.error("Upload Error:", err.response.data);
+            } else {
+                console.error("Upload Error:", err);
+            }
+            setError("Failed to process image. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    
 
     return (
         <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center p-10">
@@ -63,7 +68,6 @@ const Dashboard = () => {
                     </p>
                 </div>
             </div>
-
             {/* Upload Section */}
             <div className="mt-12 bg-white shadow-2xl py-20 px-24 max-w-lg border border-gray-200 rounded-3xl flex flex-col items-center">
                 <label className="cursor-pointer w-full">
