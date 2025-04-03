@@ -7,6 +7,7 @@ import { usePredictionStore } from "@/lib/store";
 
 const Dashboard = () => {
     const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null); 
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -14,7 +15,11 @@ const Dashboard = () => {
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
+            const selectedFile = event.target.files[0];
+            setFile(selectedFile);
+
+            const objectUrl = URL.createObjectURL(selectedFile);
+            setPreview(objectUrl); 
         }
     };
 
@@ -31,7 +36,7 @@ const Dashboard = () => {
         setError(null);
     
         try {
-            const response = await axios.post("https://b2f3-43-239-201-155.ngrok-free.app/predict", formData, {
+            const response = await axios.post("https://aa5f-2401-4900-1cc9-2dc6-15fd-e62a-b989-a657.ngrok-free.app/predict", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
     
@@ -50,12 +55,16 @@ const Dashboard = () => {
             setLoading(false);
         }
     };
-    
 
     return (
         <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center p-10">
             <div className="flex items-center justify-center gap-16 w-full">
-                <Image src="/Demo.jpg" width={350} height={350} alt="Display Image" className="rounded-3xl shadow-2xl" />
+                {/* Display selected image after upload */}
+                {preview ? (
+                    <img src={preview} alt="Selected Image" className="rounded-3xl shadow-2xl w-72 h-72 object-cover" />
+                ) : (
+                    <Image src="/Demo.jpg" width={350} height={350} alt="Display Image" className="rounded-3xl shadow-2xl" />
+                )}
 
                 <div className="max-w-2xl">
                     <h1 className="text-5xl font-bold italic text-orange-800 leading-snug">
@@ -68,6 +77,7 @@ const Dashboard = () => {
                     </p>
                 </div>
             </div>
+
             {/* Upload Section */}
             <div className="mt-12 bg-white shadow-2xl py-20 px-24 max-w-lg border border-gray-200 rounded-3xl flex flex-col items-center">
                 <label className="cursor-pointer w-full">
