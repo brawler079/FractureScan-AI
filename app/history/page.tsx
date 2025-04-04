@@ -84,7 +84,7 @@ const HistoryPage = () => {
           ))}
         </div>
       ) : (
-        <p className="text-lg text-gray-500">You haven’t uploaded any X-rays yet. Let’s fix that! 📸</p>
+        <p className="text-lg text-gray-500">You haven’t uploaded any X-rays yet. Let’s fix that!</p>
       )}
     </div>
   );
