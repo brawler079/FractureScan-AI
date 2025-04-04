@@ -26,7 +26,7 @@ export default function Header() {
               <Link href="/history" className="text-teal-600 hover:text-teal-700 hover:scale-105">
                 History
               </Link>
-              <Link href="#contact" className="text-teal-600 hover:text-teal-800">
+              <Link href="#footer" className="text-teal-600 hover:text-teal-800">
                 Contact
               </Link>
 
@@ -39,7 +39,7 @@ export default function Header() {
                   <Button
                     variant="outline"
                     onClick={() => signOut({ redirectUrl: '/' })}
-                    className="border-teal-600 rounded text-teal-600 hover:bg-purple-100"
+                    className="border-teal-600 rounded text-teal-600 hover:bg-teal-100"
                   >
                     Log out
                   </Button>
@@ -49,7 +49,7 @@ export default function Header() {
                   <Button
                     variant="outline"
                     asChild
-                    className="border-teal-600 rounded text-teal-600 hover:bg-purple-100"
+                    className="border-teal-600 rounded text-teal-600 hover:bg-teal-100"
                   >
                     <Link href="/sign-in">Log in</Link>
                   </Button>

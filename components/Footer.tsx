@@ -4,35 +4,31 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-teal-800">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
-          <div className="px-5 py-2">
-            <Link href="#" className="text-base text-teal-200 hover:text-white">
-              About
-            </Link>
-          </div>
-          <div className="px-5 py-2">
-            <Link href="#" className="text-base text-teal-200 hover:text-white">
-              Blog
-            </Link>
-          </div>
-          <div className="px-5 py-2">
-            <Link href="#" className="text-base text-teal-200 hover:text-white">
-              Privacy Policy
-            </Link>
-          </div>
-          <div className="px-5 py-2">
-            <Link href="#" className="text-base text-teal-200 hover:text-white">
-              Terms of Service
-            </Link>
-          </div>
-        </nav>
-        <p className="mt-8 text-center text-base text-teal-200">
-          &copy; {currentYear} FractureScan AI. All rights reserved.
-        </p>
+    <footer id="footer" className="bg-teal-900 text-teal-100">
+      <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-4">
+          <p className="text-lg font-medium">
+            Designed & Built by{" "}
+            <a
+              href="mailto:anandabhilakshay@gmail.com"
+              className="underline hover:text-white transition-colors cursor-pointer"
+            >
+              Abhilakshay Anand
+            </a>{" "}
+            &{" "}
+            <a
+              href="mailto:praneethvarma03@gmail.com"
+              className="underline hover:text-white transition-colors cursor-pointer"
+            >
+              Praneeth Varma
+            </a>
+          </p>
+
+          <p className="text-sm text-teal-300">
+            &copy; {currentYear} <span className="font-semibold">FractureScan AI</span>. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   )
 }
-

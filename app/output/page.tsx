@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useAuth } from "@clerk/nextjs";
 import { usePredictionStore } from "@/lib/store";
 import Image from "next/image";
 
@@ -28,7 +27,7 @@ const OutputPage = () => {
 
         try {
             const response = await axios.post(
-                "https://90fd-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/chat",
+                "https://3be7-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/chat",
                 null,
                 { params: { user_input: userMessage } }
             );
@@ -54,13 +53,13 @@ const OutputPage = () => {
                         <div className="mt-4">
                             {outputImageId ? (
                                 <Image
-                                src={`https://90fd-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/get-image/${outputImageId}`}
-                                alt="Processed Image"
-                                className="rounded-2xl shadow-lg mx-auto" 
-                                width={256}
-                                height={256}
-                                unoptimized  
-                            />
+                                    src={`https://3be7-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/get-image/${outputImageId}`}
+                                    alt="Processed Image"
+                                    className="rounded-2xl shadow-lg mx-auto"
+                                    width={256}
+                                    height={256}
+                                    unoptimized
+                                />
                             ) : (
                                 <p className="text-red-500 mt-4">Processed image not available.</p>
                             )}
@@ -82,7 +81,6 @@ const OutputPage = () => {
             <div className="w-2/5 bg-white shadow-2xl p-6 rounded-xl border border-gray-200 flex flex-col">
                 <h2 className="text-2xl font-bold text-gray-800">AI Health Assistant</h2>
 
-                {/* Chat Messages Container */}
                 <div className="flex-grow overflow-y-auto h-[400px] border rounded-2xl p-4 mt-2 space-y-2 flex flex-col">
                     {chatMessages.map((msg, index) => (
                         <div
@@ -98,7 +96,6 @@ const OutputPage = () => {
                     ))}
                 </div>
 
-                {/* Input Field & Send Button */}
                 <div className="flex mt-4">
                     <input
                         type="text"

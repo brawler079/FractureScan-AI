@@ -16,7 +16,7 @@ export default function Hero() {
           <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <Button asChild size="lg" className="w-full sm:w-auto bg-teal-600 text-white hover:bg-teal-700">
-                <Link href="/signup">Get Started</Link>
+                <Link href="/sign-up">Get Started</Link>
               </Button>
             </div>
             <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -24,7 +24,7 @@ export default function Hero() {
                 variant="outline"
                 asChild
                 size="lg"
-                className="w-full sm:w-auto text-teal-600 border-teal-600 hover:bg-purple-50"
+                className="w-full sm:w-auto text-teal-600 border-teal-600 hover:bg-teal-50"
               >
                 <Link href="#features">Learn More</Link>
               </Button>
