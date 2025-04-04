@@ -11,27 +11,29 @@ const HistoryPage = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchImages = async () => {
-            if (!userId) return;
-            setLoading(true);
-
-            try {
-                const token = await getToken();
-                const response = await axios.get("/api/history", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                setImages(response.data.images);
-            } catch (err) {
-                console.error("Error fetching images:", err);
-                setError("Failed to load images.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchImages();
-    }, [userId]);
+      const fetchImages = async () => {
+          if (!userId) return;
+          setLoading(true);
+  
+          try {
+              const token = await getToken();
+              const response = await axios.get("/api/history", {
+                  headers: { Authorization: `Bearer ${token}` },
+              });
+  
+              console.log("Fetched images:", response.data.images);  // Debugging
+              setImages(response.data.images);
+          } catch (err) {
+              console.error("Error fetching images:", err);
+              setError("Failed to load images.");
+          } finally {
+              setLoading(false);
+          }
+      };
+  
+      fetchImages();
+  }, [userId]);
+  
 
     return (
         <div className="h-screen w-full bg-gray-100 flex flex-col items-center p-10">

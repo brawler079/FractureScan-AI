@@ -12,13 +12,21 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Fetch images for logged-in user
-        const images = await Image.find({ userId }).select("_id filename");
+        // ✅ Fetch all images for the authenticated user
+        const images = await Image.find({ userId });
 
-        const formattedImages = images.map((img) => ({
-            filename: img.filename,
-            url: `/api/get-image/${img._id}`,  // API route to fetch image
-        }));
+        if (!images.length) {
+            return NextResponse.json({ message: "No images found", images: [] });
+        }
+
+        // ✅ Convert MongoDB binary data to a base64 URL
+        const formattedImages = images.map((img) => {
+            return {
+                filename: img.filename,
+                contentType: img.contentType || "image/png",
+                imageUrl: `/api/user-images/${img._id}`, // Serve images via another API route
+            };
+        });
 
         return NextResponse.json({ images: formattedImages });
 

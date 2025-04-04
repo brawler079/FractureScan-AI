@@ -5,13 +5,11 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "@clerk/nextjs";
 import { usePredictionStore } from "@/lib/store";
+import Image from "next/image";
 
 const OutputPage = () => {
     const { detectedBones, outputImageId, remedies } = usePredictionStore();
-    const { getToken, userId } = useAuth();
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [chatMessages, setChatMessages] = useState<{ sender: "bot" | "user"; text: string }[]>([]);
     const [userMessage, setUserMessage] = useState("");
 
@@ -20,53 +18,6 @@ const OutputPage = () => {
             setChatMessages([{ sender: "bot", text: `Recommended Remedies: ${remedies}` }]);
         }
     }, [remedies]);
-
-    // ✅ Upload image to /api/upload
-    const uploadImageToDB = async () => {
-        if (!outputImageId || !userId) return;
-        setLoading(true);
-
-        try {
-            const token = await getToken();
-            if (!token) {
-                setError("Unauthorized: No token found.");
-                return;
-            }
-
-            // Fetch the image from external API
-            const imageUrl = `https://aa5f-2401-4900-1cc9-2dc6-15fd-e62a-b989-a657.ngrok-free.app/get-image/${outputImageId}`;
-            const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-
-            if (!response.data) {
-                setError("Failed to fetch image.");
-                return;
-            }
-
-            // Convert image to base64
-            const base64Image = Buffer.from(response.data, "binary").toString("base64");
-
-            // Store image in MongoDB
-            await axios.post(
-                "/api/upload",
-                { image: base64Image, outputImageId, userId },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            );
-
-        } catch (err) {
-            console.error("Failed to upload image:", err);
-            setError("Failed to upload image.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        if (outputImageId) {
-            uploadImageToDB();
-        }
-    }, [outputImageId]);
 
     const handleSendMessage = async () => {
         if (!userMessage.trim()) return;
@@ -77,7 +28,7 @@ const OutputPage = () => {
 
         try {
             const response = await axios.post(
-                "https://aa5f-2401-4900-1cc9-2dc6-15fd-e62a-b989-a657.ngrok-free.app/chat",
+                "https://90fd-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/chat",
                 null,
                 { params: { user_input: userMessage } }
             );
@@ -100,24 +51,20 @@ const OutputPage = () => {
                         <h2 className="text-2xl font-bold text-gray-800">Detected Fracture:</h2>
                         <p className="text-lg font-semibold capitalize text-gray-700 mt-2">{detectedBones}</p>
 
-                        {loading ? (
-                            <p className="text-gray-500 mt-4">Uploading image...</p>
-                        ) : error ? (
-                            <p className="text-red-500 mt-4">{error}</p>
-                        ) : (
-                            <div className="mt-4">
-                                {outputImageId ? (
-                                    <img
-                                        src={`https://aa5f-2401-4900-1cc9-2dc6-15fd-e62a-b989-a657.ngrok-free.app/get-image/${outputImageId}`}
-                                        alt="Processed Image"
-                                        className="rounded-xl shadow-lg mt-4 w-64 h-64 object-contain 
-                                        mx-auto border border-gray-200"
-                                    />
-                                ) : (
-                                    <p className="text-red-500 mt-4">Processed image not available.</p>
-                                )}
-                            </div>
-                        )}
+                        <div className="mt-4">
+                            {outputImageId ? (
+                                <Image
+                                src={`https://90fd-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/get-image/${outputImageId}`}
+                                alt="Processed Image"
+                                className="rounded-2xl shadow-lg mx-auto" 
+                                width={256}
+                                height={256}
+                                unoptimized  
+                            />
+                            ) : (
+                                <p className="text-red-500 mt-4">Processed image not available.</p>
+                            )}
+                        </div>
 
                         <button
                             onClick={() => router.push("/dashboard")}

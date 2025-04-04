@@ -36,7 +36,7 @@ const Dashboard = () => {
         setError(null);
     
         try {
-            const response = await axios.post("https://aa5f-2401-4900-1cc9-2dc6-15fd-e62a-b989-a657.ngrok-free.app/predict", formData, {
+            const response = await axios.post("https://90fd-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/predict", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
     
