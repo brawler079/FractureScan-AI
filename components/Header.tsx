@@ -23,10 +23,10 @@ export default function Header() {
               <Link href="/dashboard" className="text-teal-600 hover:text-teal-800 hover:scale-105">
                 Dashboard
               </Link>
-              <Link href="/history" className="text-teal-600 hover:text-teal-700 hover:scale-105">
+              <Link href="/history" className="text-teal-600 hover:text-teal-800 hover:scale-105">
                 History
               </Link>
-              <Link href="#footer" className="text-teal-600 hover:text-teal-800">
+              <Link href="#footer" className="text-teal-600 hover:text-teal-800 hover:scale-105">
                 Contact
               </Link>
 
