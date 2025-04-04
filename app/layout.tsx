@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FractureScan AI | Bone Fracture Detection model",
+  title: "FractureScan AI | Bone Fracture Detection",
   description: "Advanced bone fracture detection model",
   icons: {
     icon: "/Demo.jpg"
