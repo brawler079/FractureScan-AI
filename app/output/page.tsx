@@ -27,7 +27,7 @@ const OutputPage = () => {
 
         try {
             const response = await axios.post(
-                "https://3be7-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/chat",
+                "https://d6c8-2409-40f4-ab-df5e-8914-cd9d-cfaf-5544.ngrok-free.app/chat",
                 null,
                 { params: { user_input: userMessage } }
             );
@@ -52,17 +52,17 @@ const OutputPage = () => {
 
                         <div className="mt-4">
                             {outputImageId ? (
-                                <Image
-                                    src={`https://3be7-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/get-image/${outputImageId}`}
+                                <img
+                                    src={`https://d6c8-2409-40f4-ab-df5e-8914-cd9d-cfaf-5544.ngrok-free.app/get-image/${outputImageId}`}
                                     alt="Processed Image"
                                     className="rounded-2xl shadow-lg mx-auto"
                                     width={256}
                                     height={256}
-                                    unoptimized
                                 />
                             ) : (
                                 <p className="text-red-500 mt-4">Processed image not available.</p>
                             )}
+
                         </div>
 
                         <button
@@ -85,11 +85,10 @@ const OutputPage = () => {
                     {chatMessages.map((msg, index) => (
                         <div
                             key={index}
-                            className={`py-2 px-4 rounded-lg max-w-[75%] ${
-                                msg.sender === "user"
+                            className={`py-2 px-4 rounded-lg max-w-[75%] ${msg.sender === "user"
                                     ? "bg-teal-300 text-right self-end rounded-3xl"
                                     : "bg-gray-300 text-left self-start rounded-3xl"
-                            }`}
+                                }`}
                         >
                             {msg.text}
                         </div>

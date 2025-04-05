@@ -44,7 +44,7 @@ const Dashboard = () => {
 
     try {
       const response = await axios.post(
-        `https://3be7-2401-4900-1c29-31e0-e591-42f5-4bf1-c646.ngrok-free.app/predict`,
+        `https://d6c8-2409-40f4-ab-df5e-8914-cd9d-cfaf-5544.ngrok-free.app/predict`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
